@@ -1,0 +1,198 @@
+/**
+ * LUXORA — Responsive Design & Breakpoint Adjustments
+ * Ensures flawless layouts on Desktop, Laptop, Tablet, and Mobile screens.
+ */
+
+/* ==========================================================================
+   Tablet Devices (max-width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 72px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .story-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  .brand-col {
+    grid-column: span 2;
+  }
+
+  .detail-layout {
+    grid-template-columns: 1fr;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .detail-image-wrap {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* ==========================================================================
+   Mobile Devices & Small Tablets (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  :root {
+    --drawer-width: 100%;
+  }
+
+  /* Header & Mobile Navigation */
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .main-nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    flex-direction: column;
+    padding: var(--space-5);
+    gap: var(--space-3);
+    box-shadow: var(--shadow-card);
+    transform: translateY(-120%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+  }
+
+  .main-nav.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-link {
+    width: 100%;
+    padding: var(--space-2) 0;
+    font-size: var(--text-base);
+  }
+
+  /* Catalog Controls Stack */
+  .catalog-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+  }
+
+  .search-box-wrap {
+    width: 100%;
+  }
+
+  .filter-chips-wrap {
+    overflow-x: auto;
+    padding-bottom: 4px;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-chip {
+    flex-shrink: 0;
+  }
+
+  .sort-box-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .sort-select {
+    flex: 1;
+  }
+
+  /* Hero Adjustments */
+  .hero-section {
+    padding: var(--space-8) var(--space-4) var(--space-6);
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  /* Form Row Collapse */
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  /* Cart Drawer Fullscreen Mobile */
+  .cart-drawer {
+    width: 100%;
+  }
+
+  /* Toast Notification */
+  .toast-container {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .toast {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   Small Mobile Devices (max-width: 540px)
+   ========================================================================== */
+@media (max-width: 540px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .brand-col {
+    grid-column: span 1;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dialog-header {
+    padding: var(--space-4);
+  }
+
+  .dialog-body {
+    padding: var(--space-4);
+  }
+}
