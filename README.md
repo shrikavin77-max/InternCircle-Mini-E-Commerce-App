@@ -47,6 +47,29 @@
   - **2. Instant UPI (Demo):** Simulated virtual payment address (VPA) verification supporting Google Pay, PhonePe, Paytm, and BHIM with an animated gateway authorization state.
   - **3. Credit / Debit Card (Demo):** Simulated luxury platinum card visual preview with safe demo placeholder data (`•••• •••• •••• 4242`).
   - *Security First:* Strictly zero collection of real card numbers, CVVs, passwords, or banking credentials. Displays prominent demo-mode disclaimers and dynamic receipts reflecting the chosen method.
+- **Client Authentication & Account Dashboard (Demo):**
+  - **Client Sign In & Sign Up:** Registration with full validation (password match, min 6 characters, terms acceptance). Includes show/hide password visibility toggles, Remember Me persistence, and one-click demo credentials filling.
+  - **Salted SHA-256 Hashing:** Passwords are never stored in plaintext; hashed with unique client-side salts using Web Crypto (`crypto.subtle.digest('SHA-256')`).
+  - **My Account Dashboard:** Personalized patron card, client details, atelier tier, and complete Order History.
+  - **Order History Integration:** Completed reservations (with item details, subtotal, delivery fee, grand total, and payment method) are linked to the active demo account and stored in `localStorage`.
+  - **Guest Shopping:** Non-blocking design allows guests to shop and checkout freely without creating an account.
+
+---
+
+## 🔐 Demo Authentication & Credentials
+
+For evaluation and testing convenience, the application automatically initializes with a seed demo patron:
+
+| Field | Demo Credential |
+|:---|:---|
+| **Email** | `demo@luxora.com` |
+| **Password** | `Password123` |
+| **Pre-loaded Patron** | Aanya Sharma (Luxury Privilège Member) |
+
+> [!NOTE]
+> **Educational Demonstration Notice:** This is a frontend-only portfolio project for InternCircle Task 5. While passwords are securely hashed with salted SHA-256 before storage in `localStorage`, client-side authentication is for demonstration only and should not be used as production-grade authentication.
+
+---
 
 ---
 
@@ -83,6 +106,7 @@ LUXORA/
 ├── js/
 │   ├── products.js         # Curated 12-product catalog dataset
 │   ├── cart.js             # Cart state, localStorage sync, Array.reduce() calculations
+│   ├── auth.js             # Demo authentication, SHA-256 hashing, dashboard & order history
 │   └── app.js              # DOM controller, search/filter/sort, event delegation, dialogs
 ├── assets/
 │   ├── images/             # Product photography assets

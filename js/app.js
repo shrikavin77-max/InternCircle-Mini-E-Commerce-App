@@ -402,6 +402,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const codRadio = document.getElementById('pay-cod');
       if (codRadio) codRadio.checked = true;
       updatePaymentMethodUI('COD');
+
+      // Pre-fill logged-in customer details if available
+      const currentUser = window.luxoraAuth ? window.luxoraAuth.getCurrentUser() : null;
+      if (currentUser && customerNameInput) {
+        customerNameInput.value = currentUser.name;
+        if (mockCardholderDisplay) mockCardholderDisplay.textContent = currentUser.name.toUpperCase();
+        if (mockCardholderName) mockCardholderName.value = currentUser.name;
+      }
     }
 
     if (checkoutBody) checkoutBody.style.display = 'flex';
@@ -546,6 +554,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to finalize confirmation and clear cart
     const completeOrderPlacement = () => {
+      // Record completed order in demo account order history
+      const currentUser = window.luxoraAuth ? window.luxoraAuth.getCurrentUser() : null;
+      const orderRecord = {
+        id: orderId,
+        userId: currentUser ? currentUser.id : 'guest',
+        customerName: nameInput.value.trim(),
+        customerPhone: phoneInput.value.trim(),
+        address: `${addressInput.value.trim()}, ${cityInput.value.trim()} - ${pincodeInput.value.trim()}`,
+        items: cart.map(item => {
+          const p = getProductById(item.id);
+          return {
+            id: item.id,
+            name: p ? p.name : 'LUXORA Creation',
+            price: p ? p.price : 0,
+            quantity: item.quantity,
+            image: p ? p.image : ''
+          };
+        }),
+        itemCount: totals.itemCount,
+        subtotal: totals.subtotal,
+        deliveryFee: totals.deliveryFee,
+        grandTotal: totals.grandTotal,
+        paymentMethod: selectedMethod,
+        paymentMethodLabel: paymentMethodHtml.replace(/<[^>]+>/g, '').trim(),
+        paymentStatus: selectedMethod === 'COD' ? 'Pending Handover' : 'Approved (Simulated Demo)',
+        date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ', ' + new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+        status: 'Confirmed & In Curation'
+      };
+
+      if (window.luxoraAuth && window.luxoraAuth.saveCompletedOrder) {
+        window.luxoraAuth.saveCompletedOrder(orderRecord);
+      }
+
       if (simulatedProcessingState) simulatedProcessingState.style.display = 'none';
       if (checkoutBody) checkoutBody.style.display = 'none';
       if (orderSuccessState) orderSuccessState.style.display = 'flex';

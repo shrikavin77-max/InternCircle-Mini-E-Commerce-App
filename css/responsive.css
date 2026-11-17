@@ -181,6 +181,23 @@
     width: 100%;
     justify-content: center;
   }
+
+  /* Account Dashboard Mobile Collapse */
+  .account-content-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .patron-welcome-card {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .patron-signout-btn {
+    width: 100%;
+  }
 }
 
 /* ==========================================================================
