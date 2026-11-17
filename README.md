@@ -42,7 +42,11 @@
 - **Product Detail Quick Preview:** Click any product card or "Quick Preview" to open an in-depth modal showing product specifications, provenance, rating, and quick add-to-bag.
 - **Slide-Out Cart Drawer:** Non-disruptive slide-out bag with interactive free-shipping progress meter.
 - **Event Delegation Architecture:** Click handlers mounted on parent containers to prevent memory leaks.
-- **Simulated Demonstration Checkout:** Clean concierge address form with validation, Cash on Delivery (COD) badge, and simulated order reservation receipts (strictly no credit card or financial info requested).
+- **Selectable Payment Methods (Simulated Demo):**
+  - **1. Cash on Delivery (COD):** White-glove concierge delivery allowing customers to inspect items before paying upon physical handover.
+  - **2. Instant UPI (Demo):** Simulated virtual payment address (VPA) verification supporting Google Pay, PhonePe, Paytm, and BHIM with an animated gateway authorization state.
+  - **3. Credit / Debit Card (Demo):** Simulated luxury platinum card visual preview with safe demo placeholder data (`•••• •••• •••• 4242`).
+  - *Security First:* Strictly zero collection of real card numbers, CVVs, passwords, or banking credentials. Displays prominent demo-mode disclaimers and dynamic receipts reflecting the chosen method.
 
 ---
 

@@ -143,6 +143,28 @@
     gap: var(--space-3);
   }
 
+  /* Payment Options Grid Mobile Collapse */
+  .payment-options-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  .mock-input-wrap {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .mock-input-wrap input {
+    padding-right: 12px;
+  }
+
+  .mock-verify-pill {
+    position: static;
+    display: inline-block;
+    align-self: flex-start;
+  }
+
   /* Cart Drawer Fullscreen Mobile */
   .cart-drawer {
     width: 100%;

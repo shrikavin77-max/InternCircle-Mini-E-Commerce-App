@@ -291,8 +291,67 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================================================
-  // Checkout Preview Dialog Modal
+  // Checkout Preview Dialog Modal & Payment Methods
   // ==========================================================================
+  const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+  const paymentCards = document.querySelectorAll('.payment-card');
+  const paymentPanelCod = document.getElementById('payment-panel-cod');
+  const paymentPanelUpi = document.getElementById('payment-panel-upi');
+  const paymentPanelCard = document.getElementById('payment-panel-card');
+  const mockCardholderDisplay = document.getElementById('mock-cardholder-display');
+  const mockCardholderName = document.getElementById('mock-cardholder-name');
+  const mockUpiId = document.getElementById('mock-upi-id');
+  const confirmOrderBtn = document.getElementById('confirm-order-btn');
+  const simulatedProcessingState = document.getElementById('simulated-processing-state');
+  const processingTitle = document.getElementById('processing-title');
+  const processingSubtitle = document.getElementById('processing-subtitle');
+  const customerNameInput = document.getElementById('customer-name');
+
+  function updatePaymentMethodUI(method) {
+    const totals = calculateTotals();
+    
+    paymentCards.forEach(card => {
+      const radio = card.querySelector('input[type="radio"]');
+      card.classList.toggle('active', radio && radio.value === method);
+    });
+
+    if (paymentPanelCod) paymentPanelCod.style.display = method === 'COD' ? 'block' : 'none';
+    if (paymentPanelUpi) paymentPanelUpi.style.display = method === 'UPI' ? 'block' : 'none';
+    if (paymentPanelCard) paymentPanelCard.style.display = method === 'CARD' ? 'block' : 'none';
+
+    if (confirmOrderBtn) {
+      if (method === 'COD') {
+        confirmOrderBtn.textContent = 'Confirm & Place Order (Pay on Handover)';
+      } else if (method === 'UPI') {
+        confirmOrderBtn.textContent = `Authorize Demo UPI Payment \u2022 ${formatCurrency(totals.grandTotal)}`;
+      } else if (method === 'CARD') {
+        confirmOrderBtn.textContent = `Authorize Demo Card Payment \u2022 ${formatCurrency(totals.grandTotal)}`;
+      }
+    }
+  }
+
+  // Listen for radio payment changes
+  paymentRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        updatePaymentMethodUI(e.target.value);
+      }
+    });
+  });
+
+  // Sync customer name with cardholder preview
+  if (customerNameInput) {
+    customerNameInput.addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      if (mockCardholderDisplay) {
+        mockCardholderDisplay.textContent = val ? val.toUpperCase() : 'LUXORA PATRON';
+      }
+      if (mockCardholderName) {
+        mockCardholderName.value = val || 'Aanya Sharma';
+      }
+    });
+  }
+
   function openCheckoutDialog() {
     const totals = calculateTotals();
     if (totals.itemCount === 0) {
@@ -338,9 +397,15 @@ document.addEventListener('DOMContentLoaded', () => {
       checkoutForm.reset();
       checkoutForm.querySelectorAll('.field-error').forEach(el => el.textContent = '');
       checkoutForm.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+      
+      // Default to COD
+      const codRadio = document.getElementById('pay-cod');
+      if (codRadio) codRadio.checked = true;
+      updatePaymentMethodUI('COD');
     }
 
     if (checkoutBody) checkoutBody.style.display = 'flex';
+    if (simulatedProcessingState) simulatedProcessingState.style.display = 'none';
     if (orderSuccessState) orderSuccessState.style.display = 'none';
 
     if (checkoutDialog) checkoutDialog.showModal();
@@ -419,12 +484,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!isValid) return;
 
-    // Process demonstration confirmation
     const totals = calculateTotals();
     const orderId = '#LX-' + Math.floor(1000 + Math.random() * 9000);
 
     const orderRefEl = document.getElementById('order-reference-id');
     if (orderRefEl) orderRefEl.textContent = orderId;
+
+    // Get Selected Payment Method
+    const selectedRadio = document.querySelector('input[name="payment_method"]:checked');
+    const selectedMethod = selectedRadio ? selectedRadio.value : 'COD';
+
+    let paymentMethodHtml = '';
+    let paymentStatusHtml = '';
+
+    if (selectedMethod === 'COD') {
+      paymentMethodHtml = 'Cash on Delivery (White-Glove Pay on Handover)';
+      paymentStatusHtml = '<strong style="color: var(--color-accent);">Pending Handover</strong>';
+    } else if (selectedMethod === 'UPI') {
+      const vpa = (mockUpiId && mockUpiId.value.trim()) || 'demo.patron@okhdfcbank';
+      paymentMethodHtml = `Instant UPI (${vpa} &bull; Simulated)`;
+      paymentStatusHtml = '<strong style="color: var(--color-success);">Approved (Simulated Demo)</strong>';
+    } else if (selectedMethod === 'CARD') {
+      const holder = (mockCardholderName && mockCardholderName.value.trim()) || nameInput.value.trim() || 'Aanya Sharma';
+      paymentMethodHtml = `Credit / Debit Card (•••• 4242 &bull; ${holder} &bull; Simulated)`;
+      paymentStatusHtml = '<strong style="color: var(--color-success);">Approved (Simulated Demo)</strong>';
+    }
 
     const receiptSummary = document.getElementById('order-receipt-summary');
     if (receiptSummary) {
@@ -445,20 +529,54 @@ document.addEventListener('DOMContentLoaded', () => {
           <span>Delivery Standard:</span>
           <strong>${totals.deliveryFee === 0 ? 'Complimentary Express' : 'Standard Delivery (₹40)'}</strong>
         </div>
+        <div class="receipt-row">
+          <span>Payment Method:</span>
+          <strong>${paymentMethodHtml}</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Payment Status:</span>
+          ${paymentStatusHtml}
+        </div>
         <div class="receipt-row bold">
-          <span>Amount Payable on Handover:</span>
+          <span>${selectedMethod === 'COD' ? 'Amount Payable on Handover:' : 'Total Amount Paid (Demo):'}</span>
           <strong>${formatCurrency(totals.grandTotal)}</strong>
         </div>
       `;
     }
 
-    // Hide checkout form and show confirmation
-    if (checkoutBody) checkoutBody.style.display = 'none';
-    if (orderSuccessState) orderSuccessState.style.display = 'flex';
+    // Function to finalize confirmation and clear cart
+    const completeOrderPlacement = () => {
+      if (simulatedProcessingState) simulatedProcessingState.style.display = 'none';
+      if (checkoutBody) checkoutBody.style.display = 'none';
+      if (orderSuccessState) orderSuccessState.style.display = 'flex';
 
-    // Requirement 7 & 11: Clear cart only after successful validation
-    clearCart();
-    showToast(`Order ${orderId} confirmed successfully!`);
+      clearCart();
+      const methodLabel = selectedMethod === 'COD' ? 'Cash on Delivery' : selectedMethod === 'UPI' ? 'Instant UPI' : 'Card';
+      showToast(`Order ${orderId} confirmed via ${methodLabel}!`);
+    };
+
+    // If electronic demo payment (UPI / Card), show simulated processing screen
+    if (selectedMethod === 'UPI' || selectedMethod === 'CARD') {
+      if (checkoutBody) checkoutBody.style.display = 'none';
+      if (simulatedProcessingState) {
+        simulatedProcessingState.style.display = 'flex';
+        if (selectedMethod === 'UPI') {
+          const vpa = (mockUpiId && mockUpiId.value.trim()) || 'demo.patron@okhdfcbank';
+          if (processingTitle) processingTitle.textContent = 'Authorizing Demo UPI Payment';
+          if (processingSubtitle) processingSubtitle.textContent = `Contacting simulated UPI network for ${vpa}...`;
+        } else {
+          if (processingTitle) processingTitle.textContent = 'Authorizing Demo Card Payment';
+          if (processingSubtitle) processingSubtitle.textContent = 'Contacting simulated card network for •••• 4242...';
+        }
+      }
+
+      setTimeout(() => {
+        completeOrderPlacement();
+      }, 950);
+    } else {
+      // COD directly completes
+      completeOrderPlacement();
+    }
   }
 
   // ==========================================================================
