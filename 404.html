@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUXORA — Page Redirect</title>
+  
+  <!-- Auto-redirect to Canonical LUXORA URL if case mismatch or route error -->
+  <script>
+    (function() {
+      var currentPath = window.location.pathname;
+      var canonicalBase = '/InternCircle-Mini-E-Commerce-App/';
+      // If accessed via lowercase or mismatched casing, redirect to canonical URL immediately
+      if (currentPath.toLowerCase().indexOf('interncircle-mini-e-commerce-app') !== -1) {
+        window.location.replace(canonicalBase);
+      } else {
+        // Fallback redirect after brief delay
+        setTimeout(function() {
+          window.location.replace(canonicalBase);
+        }, 1200);
+      }
+    })();
+  </script>
+  
+  <meta http-equiv="refresh" content="2; url=/InternCircle-Mini-E-Commerce-App/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #FAF8F5;
+      --charcoal: #1A1A18;
+      --muted: #6B6861;
+      --gold: #A38350;
+      --border: #E8E4DC;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--charcoal);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .card {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      padding: 48px 36px;
+      max-width: 500px;
+      width: 100%;
+      border-radius: 4px;
+      box-shadow: 0 12px 32px rgba(26, 26, 24, 0.04);
+    }
+    .brand {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+      display: block;
+    }
+    .eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      color: var(--charcoal);
+    }
+    p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .btn {
+      display: inline-block;
+      background: var(--charcoal);
+      color: #FAF8F5;
+      padding: 14px 28px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s ease;
+    }
+    .btn:hover {
+      background: var(--gold);
+    }
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 16px auto 0;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="brand">LUXORA</span>
+    <span class="eyebrow">Atelier Navigation</span>
+    <h1>Redirecting to Storefront</h1>
+    <p>We are navigating you to the official LUXORA luxury catalogue experience.</p>
+    <a href="/InternCircle-Mini-E-Commerce-App/" class="btn">Enter LUXORA Atelier</a>
+    <div class="spinner"></div>
+  </div>
+</body>
+</html>
