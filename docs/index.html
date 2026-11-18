@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LUXORA — Luxury Storefront & Atelier. Discover artisanal timepieces, leather goods, fine fragrances, and lifestyle essentials.">
+  <title>LUXORA — Luxury Storefront & Atelier</title>
+
+  <!-- Google Fonts: Playfair Display (Serif) & Plus Jakarta Sans (Sans-serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Modular CSS Architecture -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Application Scripts (defer ensures HTML is parsed before execution) -->
+  <script src="js/products.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- 1. Top Announcement Bar -->
+  <div class="announcement-bar" role="region" aria-label="Announcement">
+    <div class="announcement-content">
+      <span>Complimentary Delivery on orders of ₹500 or above &bull; Flat ₹40 under ₹500 &bull; Handcrafted in Small Batches</span>
+    </div>
+  </div>
+
+  <!-- 2. Responsive Navigation Header -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      
+      <!-- Mobile Menu Toggle Button -->
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+
+      <!-- Brand Logo -->
+      <div class="brand-wrapper">
+        <a href="#catalog" class="brand-logo" aria-label="LUXORA Home">
+          <span class="brand-title">LUXORA</span>
+          <span class="brand-subtitle">Atelier & Maison</span>
+        </a>
+      </div>
+
+      <!-- Main Navigation Menu -->
+      <nav id="main-nav" class="main-nav" aria-label="Main Navigation">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="#catalog" class="nav-link">Creations</a>
+        <a href="#atelier-story" class="nav-link">Atelier</a>
+        <div id="mobile-nav-account-item" class="mobile-nav-account-item"></div>
+      </nav>
+
+      <!-- Header Actions: Search trigger, Account & Cart Button -->
+      <div class="header-actions">
+        <!-- Quick Jump to Search -->
+        <a href="#catalog-controls" class="action-btn search-trigger-btn" aria-label="Jump to search products">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
+        <!-- Client Account Action & Dropdown -->
+        <div class="account-action-wrap">
+          <button id="account-toggle-btn" class="account-btn" aria-label="Client Account Menu" aria-haspopup="true" aria-expanded="false" type="button">
+            <svg class="account-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span id="account-user-label" class="account-label">Sign In</span>
+            <svg class="account-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <!-- Luxury Account Dropdown Menu (shown when logged in) -->
+          <div id="account-dropdown" class="account-dropdown" role="menu" aria-label="Account Menu">
+            <div class="dropdown-header">
+              <span class="dropdown-user-greeting">Client Privilège</span>
+            </div>
+            <button type="button" class="dropdown-item" id="dropdown-my-account" role="menuitem">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>My Account Dashboard</span>
+            </button>
+            <button type="button" class="dropdown-item" id="dropdown-my-orders" role="menuitem">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              <span>Order History</span>
+            </button>
+            <div class="dropdown-divider"></div>
+            <button type="button" class="dropdown-item logout-item" id="dropdown-logout" role="menuitem">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Shopping Cart Trigger Button -->
+        <button id="cart-toggle-btn" class="cart-btn" aria-label="Open Shopping Bag" aria-haspopup="dialog" type="button">
+          <svg class="cart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-btn-label">Bag</span>
+          <span id="cart-count-badge" class="cart-badge" aria-live="polite">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content Landmark -->
+  <main class="main-content">
+    
+    <!-- 3. Premium Hero Section -->
+    <section class="hero-section" id="hero" aria-labelledby="hero-title">
+      <div class="hero-container">
+        <span class="hero-eyebrow">Autumn / Winter Atelier Series</span>
+        <h1 id="hero-title" class="hero-title">Elegance in Every Detail</h1>
+        <p class="hero-lead">Discover curated artisanal timepieces, handcrafted leather essentials, and niche fragrances designed for the discerning individual.</p>
+        <div class="hero-actions">
+          <a href="#catalog" class="btn btn-primary">Explore Creations</a>
+          <a href="#categories" class="btn btn-outline">Browse Categories</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Featured Categories Showcase -->
+    <section class="categories-section" id="categories" aria-labelledby="categories-title">
+      <div class="section-container">
+        <div class="section-header center">
+          <span class="section-eyebrow">Curated Collections</span>
+          <h2 id="categories-title" class="section-title">Refined By Discipline</h2>
+          <p class="section-subtitle">Select a category to filter our signature creations.</p>
+        </div>
+
+        <div class="categories-grid">
+          <button class="category-card" data-category="Timepieces" type="button">
+            <div class="category-card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=700&q=80" alt="Luxury Timepieces" loading="lazy">
+            </div>
+            <div class="category-card-content">
+              <h3>Timepieces</h3>
+              <p>Precision horology & sapphire glass</p>
+              <span class="category-link">Discover &rarr;</span>
+            </div>
+          </button>
+
+          <button class="category-card" data-category="Leather Goods" type="button">
+            <div class="category-card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=700&q=80" alt="Artisanal Leather Goods" loading="lazy">
+            </div>
+            <div class="category-card-content">
+              <h3>Leather Goods</h3>
+              <p>Full-grain calfskin & saddle stitching</p>
+              <span class="category-link">Discover &rarr;</span>
+            </div>
+          </button>
+
+          <button class="category-card" data-category="Fragrances" type="button">
+            <div class="category-card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=700&q=80" alt="Fine Fragrances" loading="lazy">
+            </div>
+            <div class="category-card-content">
+              <h3>Fine Fragrance</h3>
+              <p>Bespoke extraits & rare botanicals</p>
+              <span class="category-link">Discover &rarr;</span>
+            </div>
+          </button>
+
+          <button class="category-card" data-category="Lifestyle" type="button">
+            <div class="category-card-img-wrap">
+              <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=700&q=80" alt="Lifestyle & Cashmere" loading="lazy">
+            </div>
+            <div class="category-card-content">
+              <h3>Lifestyle</h3>
+              <p>Cashmere knitwear & brass accessories</p>
+              <span class="category-link">Discover &rarr;</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Product Catalogue Section -->
+    <section class="catalog-section" id="catalog" aria-labelledby="catalog-title">
+      <div class="section-container">
+        
+        <div class="catalog-header-wrap">
+          <div>
+            <span class="section-eyebrow">The Atelier Archive</span>
+            <h2 id="catalog-title" class="section-title">The Complete Collection</h2>
+            <p class="section-subtitle">Every piece is numbered, finished by hand, and certified authentic.</p>
+          </div>
+          <div class="catalog-stats">
+            <span id="product-count-display" class="product-count-pill">Showing 12 items</span>
+          </div>
+        </div>
+
+        <!-- 7, 8, 9. Search, Category Filter, and Price Sorting Toolbar -->
+        <div class="catalog-controls" id="catalog-controls">
+          
+          <!-- Search input -->
+          <div class="search-box-wrap">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="search" 
+              id="product-search-input" 
+              class="search-input" 
+              placeholder="Search by piece name or keyword..." 
+              aria-label="Search creations"
+              autocomplete="off"
+            >
+            <button id="search-clear-btn" class="search-clear-btn" aria-label="Clear search" type="button" style="display: none;">
+              &times;
+            </button>
+          </div>
+
+          <!-- Category filter chips -->
+          <div class="filter-chips-wrap" role="group" aria-label="Filter by category">
+            <button class="filter-chip active" data-category="all" type="button">All (12)</button>
+            <button class="filter-chip" data-category="Timepieces" type="button">Timepieces</button>
+            <button class="filter-chip" data-category="Leather Goods" type="button">Leather</button>
+            <button class="filter-chip" data-category="Fragrances" type="button">Fragrance</button>
+            <button class="filter-chip" data-category="Lifestyle" type="button">Lifestyle</button>
+          </div>
+
+          <!-- Price Sorting -->
+          <div class="sort-box-wrap">
+            <label for="price-sort-select" class="sort-label">Sort by:</label>
+            <select id="price-sort-select" class="sort-select" aria-label="Sort products by price">
+              <option value="featured">Featured (Default)</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating-desc">Highest Rated</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Active Filter Status & Reset -->
+        <div id="filter-status-bar" class="filter-status-bar" style="display: none;">
+          <span id="filter-status-text">Active filters:</span>
+          <button id="reset-filters-btn" class="reset-link-btn" type="button">Clear all filters</button>
+        </div>
+
+        <!-- Dynamic Product Grid: Populated via JavaScript (Requirement 1, 2) -->
+        <div id="product-grid" class="product-grid" role="region" aria-label="Product Catalog">
+          <!-- Rendered dynamically by js/app.js -->
+        </div>
+
+        <!-- Empty Results View (shown when search/filter returns zero products) -->
+        <div id="empty-catalog-view" class="empty-catalog-view" style="display: none;">
+          <div class="empty-catalog-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </div>
+          <h3 class="empty-catalog-title">No matching creations found</h3>
+          <p class="empty-catalog-desc">We could not find any items matching your search or filter criteria. Try adjusting your query or resetting filters.</p>
+          <button id="catalog-reset-btn" class="btn btn-outline" type="button">Reset All Filters</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Atelier Craftsmanship Editorial Story -->
+    <section class="atelier-story-section" id="atelier-story" aria-labelledby="story-title">
+      <div class="section-container">
+        <div class="story-layout">
+          <div class="story-image-wrap">
+            <img src="https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=900&q=80" alt="Artisan at work in atelier" loading="lazy">
+          </div>
+          <div class="story-content">
+            <span class="section-eyebrow">Our Philosophy</span>
+            <h2 id="story-title" class="section-title">Rooted in Provenance & Patience</h2>
+            <p>Every LUXORA creation is shaped by generational craft traditions. From our vegetable-tanned Tuscan hides to precision automatic movements assembled in Geneva, we honor the deliberate pace of true luxury.</p>
+            <div class="story-badges">
+              <div class="story-badge-item">
+                <span class="badge-num">100%</span>
+                <span class="badge-label">Artisanal Provenance</span>
+              </div>
+              <div class="story-badge-item">
+                <span class="badge-num">₹500+</span>
+                <span class="badge-label">Free All-India Shipping</span>
+              </div>
+              <div class="story-badge-item">
+                <span class="badge-num">COD</span>
+                <span class="badge-label">White-Glove Delivery</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 10. Slide-Out Shopping Cart Drawer -->
+  <div id="cart-overlay" class="cart-overlay" aria-hidden="true"></div>
+  
+  <aside id="cart-drawer" class="cart-drawer" aria-labelledby="cart-drawer-title" aria-modal="true" role="dialog" aria-hidden="true">
+    
+    <!-- Drawer Header -->
+    <div class="drawer-header">
+      <div class="drawer-header-title">
+        <h2 id="cart-drawer-title" class="drawer-title">Shopping Bag</h2>
+        <span id="drawer-item-count" class="drawer-count">(0 items)</span>
+      </div>
+      <button id="cart-close-btn" class="close-icon-btn" aria-label="Close Shopping Bag" type="button">
+        &times;
+      </button>
+    </div>
+
+    <!-- Free Delivery Calculation Motivation Bar (Threshold: ₹500) -->
+    <div id="free-delivery-banner" class="delivery-progress-banner">
+      <p id="free-delivery-text" class="delivery-text">Add items to unlock complimentary delivery</p>
+      <div class="progress-track" aria-hidden="true">
+        <div id="delivery-progress-bar" class="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Scrollable Cart Line Items Container (Populated via JS) -->
+    <div id="cart-items-container" class="cart-items-container" role="region" aria-label="Cart items list">
+      <!-- Line items dynamically rendered by js/cart.js -->
+    </div>
+
+    <!-- 11. Empty Cart State View -->
+    <div id="empty-cart-view" class="empty-cart-view">
+      <div class="empty-icon-circle" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+      </div>
+      <h3 class="empty-title">Your Bag is Empty</h3>
+      <p class="empty-message">Explore our curated collections of timepieces, leather goods, and fragrances to add items to your bag.</p>
+      <button id="explore-btn" class="btn btn-outline" type="button">Discover Creations</button>
+    </div>
+
+    <!-- 11. Cart Summary Footer -->
+    <div id="cart-footer" class="cart-footer">
+      <div class="summary-line">
+        <span class="summary-label">Subtotal</span>
+        <span id="cart-subtotal" class="summary-value">₹0</span>
+      </div>
+      <div class="summary-line">
+        <span class="summary-label">Estimated Delivery</span>
+        <span id="cart-delivery" class="summary-value">₹0</span>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-line grand-total-line">
+        <span class="grand-total-label">Grand Total</span>
+        <span id="cart-grand-total" class="grand-total-value">₹0</span>
+      </div>
+      <p class="delivery-note" id="delivery-note">Free delivery applies to orders ₹500 and above (₹40 under ₹500).</p>
+
+      <button id="checkout-btn" class="btn btn-primary btn-block" type="button">
+        Proceed to Checkout
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- 6. Product Detail Preview Modal (HTML5 Dialog) -->
+  <dialog id="product-detail-dialog" class="detail-dialog" aria-labelledby="detail-title">
+    <div class="detail-dialog-inner">
+      <button id="detail-close-btn" class="close-icon-btn dialog-close-pos" aria-label="Close product preview" type="button">&times;</button>
+      
+      <div class="detail-dialog-body" id="detail-dialog-content">
+        <!-- Rendered dynamically when clicking on a card -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 12. Native HTML5 Checkout Preview Dialog Modal -->
+  <dialog id="checkout-dialog" class="checkout-modal" aria-labelledby="dialog-title">
+    <div class="dialog-content">
+      
+      <div class="dialog-header">
+        <div>
+          <span class="dialog-eyebrow">Review & Confirm</span>
+          <h2 id="dialog-title" class="dialog-title">Checkout Preview</h2>
+        </div>
+        <button id="dialog-close-btn" class="close-icon-btn" aria-label="Close checkout preview" type="button">
+          &times;
+        </button>
+      </div>
+
+      <!-- Demo Only Notice -->
+      <div class="demo-notice-banner" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span><strong>Demonstration Mode:</strong> Simulated checkout for InternCircle Task 5. No real payment or financial details are required.</span>
+      </div>
+
+      <div class="dialog-body" id="checkout-body">
+        
+        <!-- Order Summary Breakdown -->
+        <section class="checkout-section" aria-labelledby="summary-heading">
+          <h3 id="summary-heading" class="section-subheading">Order Items Review</h3>
+          <div id="checkout-items-summary" class="checkout-items-list" role="region" aria-label="Order items breakdown">
+            <!-- Dynamically populated with items, quantities, line totals -->
+          </div>
+          
+          <div class="checkout-totals-card">
+            <div class="summary-line">
+              <span>Items Subtotal (<span id="modal-item-count">0</span> items)</span>
+              <span id="modal-subtotal">₹0</span>
+            </div>
+            <div class="summary-line">
+              <span>Delivery Fee</span>
+              <span id="modal-delivery">₹0</span>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-line grand-total-line">
+              <span>Payable Total</span>
+              <span id="modal-grand-total" class="grand-total-value">₹0</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Shipping Destination Form (Strictly NO payment/card data requested) -->
+        <section class="checkout-section" aria-labelledby="shipping-heading">
+          <h3 id="shipping-heading" class="section-subheading">Concierge Delivery Details</h3>
+          <form id="checkout-form" class="checkout-form" novalidate>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customer-name">Full Name <span class="required-star">*</span></label>
+                <input type="text" id="customer-name" name="name" placeholder="e.g. Aanya Sharma" required autocomplete="name">
+                <span class="field-error" id="name-error" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <label for="customer-phone">Contact Number (10 digits) <span class="required-star">*</span></label>
+                <input type="tel" id="customer-phone" name="phone" placeholder="9876543210" required pattern="[0-9]{10}" autocomplete="tel">
+                <span class="field-error" id="phone-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="customer-address">Street Address <span class="required-star">*</span></label>
+              <input type="text" id="customer-address" name="address" placeholder="e.g. Flat 402, Royal Palms, MG Road" required autocomplete="street-address">
+              <span class="field-error" id="address-error" aria-live="polite"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="customer-city">City <span class="required-star">*</span></label>
+                <input type="text" id="customer-city" name="city" placeholder="e.g. Mumbai" required autocomplete="address-level2">
+                <span class="field-error" id="city-error" aria-live="polite"></span>
+              </div>
+              <div class="form-group">
+                <label for="customer-pincode">Postal PIN Code (6 digits) <span class="required-star">*</span></label>
+                <input type="text" id="customer-pincode" name="pincode" placeholder="400001" pattern="[0-9]{6}" maxlength="6" required autocomplete="postal-code">
+                <span class="field-error" id="pincode-error" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <!-- Premium Selectable Payment Methods -->
+            <div class="checkout-payment-section">
+              <label class="section-subheading payment-section-label">Select Payment Method <span class="required-star">*</span></label>
+              
+              <div class="payment-options-grid" role="radiogroup" aria-label="Select Payment Method">
+                <!-- 1. Cash on Delivery (COD) -->
+                <label class="payment-card active" for="pay-cod">
+                  <input type="radio" id="pay-cod" name="payment_method" value="COD" checked class="payment-radio">
+                  <div class="payment-card-header">
+                    <div class="payment-card-icon-box">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <path d="M6 12h.01M18 12h.01"></path>
+                      </svg>
+                    </div>
+                    <span class="payment-radio-indicator"></span>
+                  </div>
+                  <div class="payment-card-details">
+                    <span class="payment-card-title">Cash on Delivery</span>
+                    <span class="payment-card-sub">Pay on Handover</span>
+                  </div>
+                </label>
+
+                <!-- 2. Instant UPI -->
+                <label class="payment-card" for="pay-upi">
+                  <input type="radio" id="pay-upi" name="payment_method" value="UPI" class="payment-radio">
+                  <div class="payment-card-header">
+                    <div class="payment-card-icon-box">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                      </svg>
+                    </div>
+                    <span class="payment-radio-indicator"></span>
+                  </div>
+                  <div class="payment-card-details">
+                    <span class="payment-card-title">Instant UPI</span>
+                    <span class="payment-card-sub">GPay &bull; PhonePe &bull; Paytm</span>
+                  </div>
+                </label>
+
+                <!-- 3. Credit / Debit Card -->
+                <label class="payment-card" for="pay-card">
+                  <input type="radio" id="pay-card" name="payment_method" value="CARD" class="payment-radio">
+                  <div class="payment-card-header">
+                    <div class="payment-card-icon-box">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                      </svg>
+                    </div>
+                    <span class="payment-radio-indicator"></span>
+                  </div>
+                  <div class="payment-card-details">
+                    <span class="payment-card-title">Credit / Debit Card</span>
+                    <span class="payment-card-sub">Visa &bull; Mastercard &bull; RuPay</span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Payment Method Details Subpanels -->
+              <div class="payment-subpanel" id="payment-panel-cod">
+                <div class="payment-reassurance-box">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                  <div>
+                    <strong>White-Glove Handover:</strong>
+                    <p>Inspect your creations upon delivery before paying. Exact cash or delivery concierge's contactless mobile terminal accepted.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="payment-subpanel" id="payment-panel-upi" style="display: none;">
+                <div class="simulated-payment-box">
+                  <div class="simulated-header-badge">
+                    <span class="simulated-dot"></span>
+                    <span>Demo Payment &mdash; No real transaction</span>
+                  </div>
+                  <p class="simulated-disclaimer">Test UPI checkout simulation. No real funds or bank debit will occur.</p>
+                  
+                  <div class="form-group mock-upi-field">
+                    <label for="mock-upi-id">Virtual Payment Address (Demo VPA)</label>
+                    <div class="mock-input-wrap">
+                      <input type="text" id="mock-upi-id" placeholder="demo.client@upi" value="demo.patron@okhdfcbank" autocomplete="off">
+                      <span class="mock-verify-pill">Verified Mock VPA</span>
+                    </div>
+                  </div>
+
+                  <div class="upi-supported-apps">
+                    <span class="app-pill">Google Pay</span>
+                    <span class="app-pill">PhonePe</span>
+                    <span class="app-pill">Paytm</span>
+                    <span class="app-pill">BHIM</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="payment-subpanel" id="payment-panel-card" style="display: none;">
+                <div class="simulated-payment-box">
+                  <div class="simulated-header-badge">
+                    <span class="simulated-dot"></span>
+                    <span>Demo Payment &mdash; No real transaction</span>
+                  </div>
+                  <p class="simulated-disclaimer">For security, never enter real card numbers or CVV codes. A simulated safe test card preview is provided below.</p>
+                  
+                  <!-- Luxury Mock Card Visual Preview -->
+                  <div class="mock-card-preview" aria-hidden="true">
+                    <div class="mock-card-top">
+                      <span class="mock-card-logo">LUXORA PRIVILEGE</span>
+                      <span class="mock-card-type">PLATINUM</span>
+                    </div>
+                    <div class="mock-card-chip-box">
+                      <div class="mock-card-chip"></div>
+                      <span class="mock-contactless-wave">&bull;)))</span>
+                    </div>
+                    <div class="mock-card-digits">•••• &nbsp; •••• &nbsp; •••• &nbsp; 4242</div>
+                    <div class="mock-card-footer">
+                      <div>
+                        <span class="mock-meta-label">CARDHOLDER</span>
+                        <span class="mock-meta-val" id="mock-cardholder-display">LUXORA PATRON</span>
+                      </div>
+                      <div>
+                        <span class="mock-meta-label">EXPIRES</span>
+                        <span class="mock-meta-val">12/28</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group" style="margin-top: 14px;">
+                    <label for="mock-cardholder-name">Name Embossed on Card (Demo)</label>
+                    <input type="text" id="mock-cardholder-name" placeholder="Name on Card" value="Aanya Sharma">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <button type="submit" id="confirm-order-btn" class="btn btn-primary btn-block">
+              Confirm & Place Order (Pay on Handover)
+            </button>
+          </form>
+        </section>
+
+      </div>
+
+      <!-- Simulated Gateway Processing State (Animated transition for UPI and Card) -->
+      <div id="simulated-processing-state" class="simulated-processing-state" style="display: none;" aria-live="assertive">
+        <div class="processing-spinner-box">
+          <div class="luxury-spinner"></div>
+        </div>
+        <h3 class="processing-title" id="processing-title">Authorizing Demo Payment</h3>
+        <p class="processing-subtitle" id="processing-subtitle">Contacting simulated luxury clearing gateway...</p>
+        <span class="processing-notice">Demo Mode &bull; No real transaction is being processed</span>
+      </div>
+
+      <!-- 13. Order Confirmation State -->
+      <div id="order-success-state" class="order-success-state" style="display: none;">
+        <div class="success-icon-circle">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h3 class="success-title">Order Confirmed</h3>
+        <p class="success-subtitle">Thank you for curating with LUXORA. Your reservation <span id="order-reference-id" class="order-id">#LX-8921</span> has been placed successfully.</p>
+        
+        <div class="order-receipt-summary" id="order-receipt-summary">
+          <!-- Populated dynamically with delivery address and confirmed total -->
+        </div>
+
+        <p class="success-note">This is a demonstration order for InternCircle Task 5. Your shopping cart has been cleared.</p>
+        <button id="success-dismiss-btn" class="btn btn-primary" type="button">Continue Shopping</button>
+      </div>
+
+    </div>
+  </dialog>
+
+  <!-- Client Authentication Dialog (Login & Sign-Up) -->
+  <dialog id="auth-dialog" class="auth-modal" aria-labelledby="auth-modal-title">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div>
+          <span class="dialog-eyebrow">Client Services</span>
+          <h2 id="auth-modal-title" class="dialog-title">Client Sign In</h2>
+        </div>
+        <button id="auth-close-btn" class="close-icon-btn" aria-label="Close authentication window" type="button">&times;</button>
+      </div>
+
+      <!-- Demo Authentication Notice Banner -->
+      <div class="demo-notice-banner" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span><strong>Demo Authentication:</strong> Passwords are hashed client-side with salted SHA-256 for this internship demo. Guest shopping is always available without an account.</span>
+      </div>
+
+      <!-- Auth Tabs Switcher -->
+      <div class="auth-tabs" role="tablist" aria-label="Authentication Options">
+        <button type="button" class="auth-tab-btn active" id="auth-tab-login" role="tab" aria-selected="true">Sign In</button>
+        <button type="button" class="auth-tab-btn" id="auth-tab-signup" role="tab" aria-selected="false">Create Account</button>
+      </div>
+
+      <div class="auth-body">
+        
+        <!-- 1. Login Form -->
+        <form id="login-form" class="auth-form" novalidate>
+          <div id="login-banner-error" class="auth-banner-error" style="display: none;" role="alert"></div>
+
+          <!-- Quick Fill Demo Credentials -->
+          <div class="demo-credential-pill-box">
+            <span>Evaluation Shortcut:</span>
+            <button type="button" id="fill-demo-credentials-btn" class="demo-pill-btn">Use Demo Account (demo@luxora.com)</button>
+          </div>
+
+          <div class="form-group">
+            <label for="login-email">Email Address <span class="required-star">*</span></label>
+            <input type="email" id="login-email" name="email" placeholder="name@domain.com" required autocomplete="username">
+            <span class="auth-field-error" id="login-email-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <div class="label-with-action">
+              <label for="login-password">Password <span class="required-star">*</span></label>
+              <a href="#" id="forgot-password-link" class="forgot-link">Forgot password?</a>
+            </div>
+            <div class="password-input-wrap">
+              <input type="password" id="login-password" name="password" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" id="login-pwd-toggle" class="pwd-toggle-btn" aria-label="Toggle password visibility">
+                <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+            </div>
+            <span class="auth-field-error" id="login-password-error" aria-live="polite"></span>
+          </div>
+
+          <div class="auth-options-row">
+            <label class="checkbox-label" for="login-remember">
+              <input type="checkbox" id="login-remember" name="remember" checked>
+              <span>Remember me on this device</span>
+            </label>
+          </div>
+
+          <button type="submit" id="login-submit-btn" class="btn btn-primary btn-block">Sign In to Atelier</button>
+
+          <p class="auth-switch-text">
+            New to LUXORA? <button type="button" id="goto-signup-link" class="inline-link-btn">Create your client account</button>
+          </p>
+        </form>
+
+        <!-- 2. Sign-Up Form -->
+        <form id="signup-form" class="auth-form" style="display: none;" novalidate>
+          <div id="signup-banner-error" class="auth-banner-error" style="display: none;" role="alert"></div>
+
+          <div class="form-group">
+            <label for="signup-name">Full Name <span class="required-star">*</span></label>
+            <input type="text" id="signup-name" name="name" placeholder="e.g. Vikramaditya Rao" required autocomplete="name">
+            <span class="auth-field-error" id="signup-name-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-email">Email Address <span class="required-star">*</span></label>
+            <input type="email" id="signup-email" name="email" placeholder="name@domain.com" required autocomplete="email">
+            <span class="auth-field-error" id="signup-email-error" aria-live="polite"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="signup-password">Password (min 6 chars) <span class="required-star">*</span></label>
+              <div class="password-input-wrap">
+                <input type="password" id="signup-password" name="password" placeholder="••••••••" required autocomplete="new-password">
+                <button type="button" id="signup-pwd-toggle" class="pwd-toggle-btn" aria-label="Toggle password visibility">
+                  <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+              </div>
+              <span class="auth-field-error" id="signup-password-error" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="signup-confirm-pwd">Confirm Password <span class="required-star">*</span></label>
+              <div class="password-input-wrap">
+                <input type="password" id="signup-confirm-pwd" name="confirm_password" placeholder="••••••••" required autocomplete="new-password">
+                <button type="button" id="signup-confirm-pwd-toggle" class="pwd-toggle-btn" aria-label="Toggle confirm password visibility">
+                  <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+              </div>
+              <span class="auth-field-error" id="signup-confirm-error" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div class="auth-options-row">
+            <label class="checkbox-label" for="signup-terms">
+              <input type="checkbox" id="signup-terms" name="terms" required>
+              <span>I accept the LUXORA Atelier Terms & Privacy Guidelines</span>
+            </label>
+            <span class="auth-field-error" id="signup-terms-error" aria-live="polite"></span>
+          </div>
+
+          <button type="submit" id="signup-submit-btn" class="btn btn-primary btn-block">Create Demo Account</button>
+
+          <p class="auth-switch-text">
+            Already have an account? <button type="button" id="goto-login-link" class="inline-link-btn">Sign in here</button>
+          </p>
+        </form>
+
+      </div>
+    </div>
+  </dialog>
+
+  <!-- My Account Dashboard Dialog (Profile & Order History) -->
+  <dialog id="account-dialog" class="account-modal" aria-labelledby="account-modal-title">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div>
+          <span class="dialog-eyebrow">Client Privilège</span>
+          <h2 id="account-modal-title" class="dialog-title">Client Dashboard</h2>
+        </div>
+        <button id="account-close-btn" class="close-icon-btn" aria-label="Close client dashboard" type="button">&times;</button>
+      </div>
+
+      <div class="dialog-body account-body">
+        
+        <!-- Patron Welcome Card -->
+        <div class="patron-welcome-card">
+          <div class="patron-avatar-circle" id="account-avatar-initials">AS</div>
+          <div class="patron-welcome-info">
+            <span class="patron-tier-badge">Luxury Privilège Member</span>
+            <h3 class="patron-name" id="account-welcome-name">Aanya Sharma</h3>
+            <p class="patron-email" id="account-profile-email">demo@luxora.com</p>
+          </div>
+          <button type="button" id="account-logout-btn" class="btn btn-outline patron-signout-btn">Sign Out</button>
+        </div>
+
+        <!-- Account Tabs & Sections -->
+        <div class="account-content-grid">
+          
+          <!-- Order History Section -->
+          <div class="account-section orders-section">
+            <div class="account-section-header">
+              <h3 class="section-subheading">Your Order History</h3>
+              <span class="account-subheading-note">Completed demo reservations</span>
+            </div>
+
+            <!-- Orders List -->
+            <div id="account-orders-list" class="account-orders-list"></div>
+
+            <!-- Empty Orders View -->
+            <div id="account-empty-orders" class="account-empty-orders" style="display: none;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              <h4>No orders recorded yet</h4>
+              <p>Explore our curated collections of timepieces, leather goods, and fragrances to place your first reservation.</p>
+              <button type="button" id="account-shop-now-btn" class="btn btn-outline">Explore Atelier Creations</button>
+            </div>
+          </div>
+
+          <!-- Profile Details Section -->
+          <div class="account-section profile-details-section">
+            <div class="account-section-header">
+              <h3 class="section-subheading">Patron Details</h3>
+            </div>
+
+            <div class="profile-card">
+              <div class="profile-field">
+                <span class="profile-field-label">Full Name</span>
+                <span class="profile-field-val" id="account-profile-name">Aanya Sharma</span>
+              </div>
+              <div class="profile-field">
+                <span class="profile-field-label">Atelier Tier</span>
+                <span class="profile-field-val">Privilège Client (Complimentary Shipping & Concierge)</span>
+              </div>
+              <div class="profile-field">
+                <span class="profile-field-label">Member Since</span>
+                <span class="profile-field-val" id="account-profile-since">Autumn 2026</span>
+              </div>
+              <div class="profile-field">
+                <span class="profile-field-label">Data Privacy Note</span>
+                <span class="profile-field-val text-muted">All credentials for this internship demo are persisted in browser localStorage with client-side SHA-256 salted hashing.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification Feedback Container -->
+  <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+  <!-- 14. Professional Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <div class="footer-col brand-col">
+          <span class="footer-brand-title">LUXORA</span>
+          <p class="footer-description">An atelier dedicated to uncompromised craftsmanship, understated sophistication, and curated lifestyle luxuries across India.</p>
+          <div class="footer-assurance">
+            <span>&bull; Hand-inspected</span>
+            <span>&bull; Insured Delivery</span>
+            <span>&bull; Authentic Guarantee</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Collections</h4>
+          <ul class="footer-links">
+            <li><a href="#catalog" class="footer-cat-link" data-cat="Timepieces">Timepieces</a></li>
+            <li><a href="#catalog" class="footer-cat-link" data-cat="Leather Goods">Artisanal Leather</a></li>
+            <li><a href="#catalog" class="footer-cat-link" data-cat="Fragrances">Fine Fragrance</a></li>
+            <li><a href="#catalog" class="footer-cat-link" data-cat="Lifestyle">Cashmere & Lifestyle</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Client Services</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Bespoke Concierge</a></li>
+            <li><a href="#hero">Complimentary Shipping Policy</a></li>
+            <li><a href="#hero">Care & Preservation Guide</a></li>
+            <li><a href="#hero">Atelier Appointments</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Delivery Standards</h4>
+          <p class="footer-text">Complimentary delivery across India on orders of ₹500 or higher. Flat ₹40 for orders under ₹500.</p>
+          <p class="footer-subtext">All prices listed in Indian Rupees (INR) inclusive of all applicable duties.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 LUXORA Maison & Atelier. Built for InternCircle Virtual Internship — Task 5 (Full Stack Web Development).</p>
+        <p class="footer-tech-stack">HTML5 &bull; CSS3 &bull; Vanilla JavaScript &bull; localStorage &bull; Native Dialog</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
